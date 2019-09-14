@@ -16,6 +16,7 @@ This was fun, but also tricky. I want to search for "R" to see how many companie
 ```{r}
 R_regex <- "(?<![:alnum:])R(?![:alnum:]|&)"
 SAS_regex <- "(?<![:alnum:])SAS(?![:alnum:])"
+Excel_regex <- "(?<![:alnum:])Excel(?![:alnum:])"
 SPSS_regex <- "(?<![:alnum:])SPSS(?![:alnum:])"
 ml_regex <- "(?<![:alnum:])Machine Learning|ML|machine learning|AI(?![:alnum:])"
 git_regex <- "(?<![:alnum:])git|Git(?![:alnum:])"
@@ -38,7 +39,7 @@ descriptions %>%
          Spark = str_detect(description, regex('Spark', ignore_case = F)),
          Hive = str_detect(description, regex('Hive|Hadoop|HQL', ignore_case = F)),
          JS = str_detect(description, regex('javascript', ignore_case = T)),
-         Excel = str_detect(description, regex('excel', ignore_case = T)),
+         Excel = str_detect(description, regex(Excel_regex, ignore_case = F)),
          Stata = str_detect(description, regex('stata', ignore_case = T)),
          
          # Skills
