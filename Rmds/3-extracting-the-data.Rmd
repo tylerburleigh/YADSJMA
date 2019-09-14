@@ -1,6 +1,6 @@
 
 
-# Extracting the data {.tabset}
+# Data wrangling {.tabset}
 
 OK I now have about 11500 files scraped. Let's extract and clean the data! First I'll extract what I'm calling the job metadata. Things like location, job title, company. It's not the contents of the job ads, but it helps to describe or contextualize the job ads. Then I'll extract the contents of the job ads themselves -- the job description, type of position (FT / PT), and industry.
 

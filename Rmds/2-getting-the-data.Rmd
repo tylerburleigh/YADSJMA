@@ -1,7 +1,7 @@
 
 
 
-# Getting the data {.tabset}
+# Getting the raw data {.tabset}
 
 First I'll scrape the data from LinkedIn. I wrote a package to do this called [`LinkedInJobsScrapeR`](https://github.com/tylerburleigh/LinkedInJobsScrapeR).
 

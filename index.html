@@ -1694,8 +1694,8 @@ summary {
 <p>Most readers won’t be interested in the finer details, but moreso the analyses and results, so I’ve organized the sections below into tabbed sections with some of the more “in the weeds” methods sections collapsed by default.</p>
 </div>
 </div>
-<div id="getting-the-data" class="section level1 tabset">
-<h1>Getting the data</h1>
+<div id="getting-the-raw-data" class="section level1 tabset">
+<h1>Getting the raw data</h1>
 <p>First I’ll scrape the data from LinkedIn. I wrote a package to do this called <a href="https://github.com/tylerburleigh/LinkedInJobsScrapeR"><code>LinkedInJobsScrapeR</code></a>.</p>
 <div id="section" class="section level2">
 <h2><span>➡</span></h2>
@@ -1753,8 +1753,8 @@ for(i in 1:length(locations)){
 }</code></pre>
 </div>
 </div>
-<div id="extracting-the-data" class="section level1 tabset">
-<h1>Extracting the data</h1>
+<div id="data-wrangling" class="section level1 tabset">
+<h1>Data wrangling</h1>
 <p>OK I now have about 11500 files scraped. Let’s extract and clean the data! First I’ll extract what I’m calling the job metadata. Things like location, job title, company. It’s not the contents of the job ads, but it helps to describe or contextualize the job ads. Then I’ll extract the contents of the job ads themselves – the job description, type of position (FT / PT), and industry.</p>
 <div id="section-1" class="section level2">
 <h2><span>➡</span></h2>
@@ -1812,7 +1812,7 @@ criteria &lt;- data.table::fread(unzip(zip_file, &quot;criteria.csv&quot;))
 file.remove(&quot;metadata.csv&quot;, &quot;descriptions.csv&quot;, &quot;criteria.csv&quot;)</code></pre>
 <pre><code>## [1] TRUE TRUE TRUE</code></pre>
 </div>
-<div id="data-wrangling" class="section level2">
+<div id="data-wrangling-1" class="section level2">
 <h2>Data wrangling</h2>
 <p>Next it looks like some jobs were cross-posted from one geo-location to another, so I’ll deduplicate the dataframes. I can dedupe using the <code>job_id</code> variable (LinkedIn’s own job identification tokens). I’ll also do some other data wrangling here.</p>
 <p>One of the choices that I’m making here is to exclude Data Engineer positions. I do this by excluding jobs where “Engineer” is in the job title, unless “Scientist” is also in the job title.</p>
