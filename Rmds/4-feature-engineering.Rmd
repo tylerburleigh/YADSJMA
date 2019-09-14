@@ -97,7 +97,7 @@ generate_barplot <- function(tbl, position, content, n, location_set) {
                      "Toronto",
                      "NYC, SF, Seattle, Boston, and Toronto that had a remote option")
   
-  plot_caption <- paste0("Jobs were scraped from LinkedIn in Sept 2019\nLocations included ", location_sets[location_set], "\nPositions were Entry, Associate, and Senior levels")
+  plot_caption <- paste0("Jobs were scraped from LinkedIn in Sept 2019\nLocations included ", location_sets[location_set], "\nPositions were Entry, Associate, and Senior levels\nsource: https://tylerburleigh.com/YADSJMA")
   
   plot_title <- paste0(content, ' in "', position, '" job ads (N = ', n, ')')
   
