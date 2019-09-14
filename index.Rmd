@@ -1,0 +1,79 @@
+---
+title: "Yet Another Data Science Job Market Analysis (YADJSM)"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r, include = FALSE}
+# Libraries
+library(tidyverse)
+library(data.table)
+library(LinkedInJobsScrapeR)
+library(ggplot2)
+library(ggpubr)
+library(scales)
+```
+
+```{r child = here::here("Rmds", "1-introduction.Rmd")}
+
+```
+
+```{r child = here::here("Rmds", "2-getting-the-data.Rmd")}
+
+```
+
+```{r child = here::here("Rmds", "3-extracting-the-data.Rmd")}
+
+```
+
+```{r child = here::here("Rmds", "4-feature-engineering.Rmd")}
+
+```
+
+
+# Data Scientist Jobs {.tabset .tabset-pills}
+
+## All locations
+
+```{r child = here::here("Rmds", "5-analysis-1-data-science-jobs.Rmd")}
+
+```
+
+## Toronto
+
+```{r child = here::here("Rmds", "5-analysis-3-data-science-jobs-canada.Rmd")}
+
+```
+
+
+## Remote option
+
+```{r child = here::here("Rmds", "5-analysis-5-data-science-jobs-remote.Rmd")}
+
+```
+
+
+# Data Analyst jobs {.tabset .tabset-pills}
+
+## All locations
+
+```{r child = here::here("Rmds", "5-analysis-2-data-analyst-jobs.Rmd")}
+
+```
+
+## Toronto
+
+```{r child = here::here("Rmds", "5-analysis-4-data-analyst-jobs-canada.Rmd")}
+
+```
+
+## Remote option
+
+```{r child = here::here("Rmds", "5-analysis-6-data-analyst-jobs-remote.Rmd")}
+
+```
+
+
+
+

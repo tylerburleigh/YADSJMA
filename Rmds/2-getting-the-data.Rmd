@@ -1,0 +1,68 @@
+
+
+
+# Getting the data {.tabset}
+
+First I'll scrape the data from LinkedIn. I wrote a package to do this called [`LinkedInJobsScrapeR`](https://github.com/tylerburleigh/LinkedInJobsScrapeR).
+
+##  <span>➡</span>
+
+## Scraping parameters
+
+To scrape the data I'll need to define the parameters for scraping.
+
+I'll limit myself to Data Scientist and Data Analyst positions in major cities that I think have a lot of tech jobs. These are also cities that I would consider moving to if given the right opportunity. I'll also restrict the search to "seniority levels" 2, 3, and 4 -- these correspond to Entry level, Associate, and Mid-senior levels on LinkedIn.
+
+```{r}
+job_titles <- c('data scientist', 'data analyst')
+locations <- list(
+    c('New York City Metropolitan Area', 'NYC'),
+    c('San Francisco Bay Area', 'SF'),
+    c('Greater Boston', 'BOS'),
+    c('Greater Seattle Area', 'SEA'),
+    c('Greater Toronto Area Metropolitan Area', 'TO')
+)
+experience_levels <- c(2, 3, 4)
+```
+
+## Scraping
+
+I'll write a loop to iterate through all of the parameters defined above and scrape the data using my package. This loop will iterate over the list of locations, the list of experience levels, and the list of job titles.
+
+```{r, eval = FALSE}
+# For the jobs to scrape, loop through all of the...
+#   i = locations
+#   k = experience levels
+#   j = job titles
+for(i in 1:length(locations)){
+  for(k in 1:length(experience_levels)){
+    for (j in 1:length(job_titles)){
+      
+      # Print the job so I can monitor
+      # the task as it does its thing
+      print(paste0("CURRENT JOB: ", 
+                    job_titles[j], ": ", 
+                    experience_levels[k], ": ", 
+                    locations[[i]][1]))
+      
+      # I don't want a space in the directory name
+      job_title_no_space <- gsub("\\s", "", job_titles[j])
+      
+      # Check if files exist in the directory
+      # and skip if they do. This is helpful
+      # in case I need to restart the scrape job
+      # (which I did)
+      files <- list.files(paste0('data/',
+                                job_title_no_space, '/',
+                                experience_levels[k], '/',
+                                locations[[i]][2]))
+      if(length(files) > 0) next
+      
+      LinkedInJobsScrapeR::scrape_job(locations_index = i,
+                                       experience_level_index = k,
+                                       job_titles_index = j)  
+    }
+  }
+}
+```
+

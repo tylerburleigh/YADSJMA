@@ -1,0 +1,210 @@
+
+# Features and methods {.tabset}
+
+What are the skills that employers are looking for in Data Scientist and Data Analyst roles?
+
+To answer this question, I'll need to "engineer" some features. I'll use regular expressions (RegEx) and then search within the job description texts for those strings. I'll try to determine what programming languages, degrees, disciplines, and other skills employers are looking for. (Presumably if these appear in the ad it's because the employer is looking for these things in a candidate).
+
+I'll also put here any "helper functions" that I write to use later.
+
+##  <span>➡</span>
+
+## Defining the features
+
+This was fun, but also tricky. I want to search for "R" to see how many companies are looking for people with knowledge of R programming, but "R" is just a single capital letter! What about "Redmond, WA" or "R&D"? When writing RegEx, it's important to consider edge cases and false positives and build the regular expression with those in mind.
+
+```{r}
+R_regex <- "(?<![:alnum:])R(?![:alnum:]|&)"
+SAS_regex <- "(?<![:alnum:])SAS(?![:alnum:])"
+SPSS_regex <- "(?<![:alnum:])SPSS(?![:alnum:])"
+ml_regex <- "(?<![:alnum:])Machine Learning|ML|machine learning|AI(?![:alnum:])"
+git_regex <- "(?<![:alnum:])git|Git(?![:alnum:])"
+ma_regex <- "(?<![:alnum:])Master's|Masters|MA|M.A.|MPH|M.P.H.(?![:alnum:])"
+phd_regex <- "(?<![:alnum:])PHD|PhD|Ph.D.|Doctorate|Doctor(?![:alnum:])"
+ba_regex <- "(?<![:alnum:])BS|B.S.|B.A.|Bachelors|Bachelor's|BA(?![:alnum:])"
+ss_regex <- "Psychology|Social Science|Political Science|Behavioral Science|Behavior Science|Behavioural Science"
+ts_regex <- 'temporal|time series|timeseries|longitudinal'
+
+descriptions %>%
+  mutate(
+         # Languages
+         python = str_detect(description, regex("python", ignore_case = T)),
+         R = str_detect(description, regex(R_regex, ignore_case = F)),
+         SPSS = str_detect(description, regex(SPSS_regex, ignore_case = F)),
+         SAS = str_detect(description, regex(SAS_regex, ignore_case = F)),
+         Tableau = str_detect(description, regex('Tableau', ignore_case = T)),
+         SQL = str_detect(description, regex('SQL', ignore_case = F)),
+         Matlab = str_detect(description, regex('Matlab', ignore_case = T)),
+         Spark = str_detect(description, regex('Spark', ignore_case = F)),
+         Hive = str_detect(description, regex('Hive|Hadoop|HQL', ignore_case = F)),
+         JS = str_detect(description, regex('javascript', ignore_case = T)),
+         Excel = str_detect(description, regex('excel', ignore_case = T)),
+         Stata = str_detect(description, regex('stata', ignore_case = T)),
+         
+         # Skills
+         stats = str_detect(description, regex('statistics|statistical', ignore_case = T)),
+         regression = str_detect(description, regex('regression', ignore_case = F)),
+         experiments = str_detect(description, regex('experiments', ignore_case = F)),
+         ml = str_detect(description, regex(ml_regex, ignore_case = F)),
+         nlp = str_detect(description, regex('NLP|natural language', ignore_case = T)),
+         ts = str_detect(description, regex(ts_regex, ignore_case = T)),
+         git = str_detect(description, regex(git_regex, ignore_case = T)),
+         viz = str_detect(description, regex('visuali|viz', ignore_case = T)),
+         unstruct_data = str_detect(description, regex(' unstructured data', ignore_case = T)),
+         big_data = str_detect(description, regex('large data|big data', ignore_case = T)),
+         
+         # Degrees
+         ba = str_detect(description, regex(ba_regex, ignore_case = T)),
+         ma = str_detect(description, regex(ma_regex, ignore_case = T)),
+         phd = str_detect(description, regex(phd_regex, ignore_case = T)),
+         cs = str_detect(description, regex("CompSci|Comp. Sci|Comp Sci|Computer Science", ignore_case = T)),
+         ss = str_detect(description, regex(ss_regex, ignore_case = T)),
+         math = str_detect(description, regex("Mathematics|Math ", ignore_case = T)),
+         neuro = str_detect(description, regex("Neuroscience", ignore_case = T)),
+         physics = str_detect(description, regex("Physics", ignore_case = T)),
+         econ = str_detect(description, regex("Economics", ignore_case = T)),
+         pubhealth = str_detect(description, regex("Public Health", ignore_case = T)),
+         bioinfo = str_detect(description, regex("Bioinformatics", ignore_case = T)),
+         
+         # Other
+         remote = str_detect(description, regex('remote', ignore_case = T)),
+         
+  ) -> descriptions
+```
+
+
+## Helper functions {.tabset}
+
+I'll write some functions for operations that get repeated later. 
+
+One of these is generating barplots from tabulated data. 
+
+### generate_barplot()
+
+```{r}
+# Function for plotting the results of tabulated data
+generate_barplot <- function(tbl, position, content, n, location_set) {
+  # Long to wide
+  tbl %>%
+    select(-total) %>%
+    melt(., id.vars = c("level")) -> tbl_l
+  
+  # Relevel factor so that the ordering makes sense
+  tbl_l$level <- factor(tbl_l$level, levels = c("Entry level", "Associate", "Mid-Senior level"))
+  
+  # Use this when identifying location set in analysis
+  location_sets <- c("NYC, SF, Seattle, Boston, and Toronto", 
+                     "Toronto",
+                     "NYC, SF, Seattle, Boston, and Toronto that had a remote option")
+  
+  plot_caption <- paste0("Jobs were scraped from LinkedIn in Sept 2019\nLocations included ", location_sets[location_set], "\nPositions were Entry, Associate, and Senior levels")
+  
+  plot_title <- paste0(content, ' in "', position, '" job ads (N = ', n, ')')
+  
+  # Graph
+  ggplot(data = tbl_l, aes(x = reorder(variable, value), y = value, fill = level)) + 
+    geom_bar(position="dodge", stat="identity") +
+    scale_y_continuous(breaks = seq(0, 100, 5), limits = c(0, 100), expand = c(0, 0, 0, 0)) + 
+    ylab("percent of jobs") + 
+    xlab("") + 
+    coord_flip() + 
+    theme_minimal() +
+    scale_fill_manual("legend", values = c("Entry level" = "#ffeda0", 
+                                           "Associate" = "#feb24c", 
+                                           "Mid-Senior level" = "#f03b20")) +
+    labs(title = plot_title, caption = plot_caption) -> plot
+  
+  print(plot)
+}
+
+```
+
+### summarize_tools()
+
+Summarize tools and programming languages.
+
+```{r}
+summarize_tools <- function(data) {
+  data %>%
+    group_by(level) %>%
+    summarize(total = n(),
+              SQL = round(sum(SQL)/total*100),
+              Python = round(sum(python)/total*100),
+              R = round(sum(R)/total*100),
+              Spark = round(sum(Spark)/total*100),
+              Hive = round(sum(Hive)/total*100),
+              Tableau = round(sum(Tableau)/total*100),
+              SAS = round(sum(SAS)/total*100),
+              JavaScript = round(sum(JS)/total*100),
+              SPSS = round(sum(SPSS)/total*100),
+              Matlab = round(sum(Matlab)/total*100),
+              Excel = round(sum(Excel)/total*100),
+              Stata = round(sum(Stata)/total*100),
+              )
+}
+```
+
+### summarize_other_skills()
+
+Summarize other skills like "statistics" or "machine learning".
+
+```{r}
+summarize_other_skills <- function(data) {
+  data %>%
+    group_by(level) %>%
+    summarize(total = n(),
+              Statistics = round(sum(stats)/total*100),
+              `Machine Learning` = round(sum(ml)/total*100),
+              NLP = round(sum(nlp)/total*100),
+              Git = round(sum(git)/total*100),
+              Regression = round(sum(regression)/total*100),
+              `Time Series` = round(sum(ts)/total*100),
+              Visualization = round(sum(viz)/total*100),
+              `Big Datasets` = round(sum(big_data)/total*100),
+              `Unstructured Data` = round(sum(unstruct_data)/total*100)
+              )
+}
+```
+
+
+### summarize_degrees()
+
+Summarize degrees.
+
+```{r}
+summarize_degrees <- function(data) {
+  data %>%
+    group_by(level) %>%
+    summarize(total = n(),
+              Bachelor = round(sum(ba)/total*100),
+              Master = round(sum(ma)/total*100),
+              PhD = round(sum(phd)/total*100)
+              )
+}
+```
+
+
+
+### summarize_disciplines()
+
+Summarize disciplines.
+
+```{r}
+summarize_disciplines <- function(data) {
+  data %>%
+    group_by(level) %>%
+    summarize(total = n(),
+              `Computer Science` = round(sum(cs)/total*100),
+              `Social Science` = round(sum(ss)/total*100),
+              Neuroscience = round(sum(phd)/total*100),
+              `Public Health` = round(sum(pubhealth)/total*100),
+              Physics = round(sum(physics)/total*100),
+              Economics = round(sum(econ)/total*100),
+              Bioinformatics = round(sum(bioinfo)/total*100)
+              )
+}
+```
+
+
+
+

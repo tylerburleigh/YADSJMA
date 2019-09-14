@@ -1,0 +1,68 @@
+
+### Toronto {.tabset}
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+ds_filter <- "datascientist"
+n_ads <- nrow(descriptions %>% filter(position == ds_filter, location_abbr == "TO"))
+```
+
+`r n_ads` data scientist job ads were included in this analysis.
+
+#### Tools / languages
+
+```{r ds-canada-programming, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter, location_abbr == "TO") %>%
+  summarize_tools() %>%
+  generate_barplot(., "Data Scientist", 'Tools and languages', n_ads, 2)
+
+```
+
+Code for the above graph:
+
+```{r ds-canada-programming, eval=FALSE}
+```
+
+#### Other skills
+
+```{r ds-canada-other, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter, location_abbr == "TO") %>%
+  summarize_other_skills() %>%
+  generate_barplot(., "Data Scientist", 'Other skills', n_ads, 2)
+
+```
+
+Code for the graph above:
+
+```{r ds-canada-other, eval=FALSE}
+```
+
+#### Degrees
+
+```{r ds-canada-degrees, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter, location_abbr == "TO") %>%
+  summarize_degrees() %>%
+  generate_barplot(., "Data Scientist", 'Degrees', n_ads, 2)
+
+```
+
+Code for the graph above:
+
+```{r ds-canada-degrees, eval=FALSE}
+```
+
+#### Disciplines
+
+```{r ds-canada-disciplines, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter, location_abbr == "TO") %>%
+  summarize_disciplines() %>%
+  generate_barplot(., "Data Scientist", 'Disciplines', n_ads, 2)
+```
+
+Code for the graph above:
+
+```{r ds-canada-disciplines, eval=FALSE}
+```

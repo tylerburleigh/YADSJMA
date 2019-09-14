@@ -1,0 +1,54 @@
+
+# Introduction
+
+Yes yes, I know. There are lots of analyses of the Data Science job market already. I think it's only natural for people to study personally relevant topics, and for data scientists to want to make better decisions using data. I am only human. But seriously, I started this project because I had a few questions that I wanted to answer that I couldn't find the answers to in prior works.
+
+Here are some of my questions:
+
+- What does the data science market in Toronto look like, and how does it compare to market in some major US cities where data science is currently booming (New York City, San Francisco, Seattle, and Boston)? I haven't come across an analysis of the Canadian data science job market, and personally I'd like to move to Ontario again in the future, so understanding this market would be useful.
+
+- What skills are in highest demand at different levels of seniority? I haven't seen an analysis that takes seniority into account, which could be masking some interesting patterns. Most of the analyses I've seen are aimed at people trying to "break into" the data science profession. What about people who are growing into their careers?
+
+- How many remote data science jobs are there and what do these jobs look like?
+
+## Methods
+
+The data was from a scrape of LinkedIn job ads in September 2019. I scraped job ads for "data scientist" and "data analyst" positions at the levels of Entry, Associate, and Mid-senior in New York City, San Francisco, Boston, Seattle, and Toronto. For each city I targeted the "greater metro area" -- in NYC, for example, this included some cities in NJ just on the other side of the Hudson river. I analyzed the "data scientist" and "data analyst" positions separately.
+
+## Key results
+
+This is what I found:
+
+### Data scientist jobs
+
+The profile of a data scientist looks like someone who:
+
+- Knows Python or R (but R less so in Toronto), SQL, and Excel; preferably one of the Big Data frameworks like Hive or Spark
+- Has a BA or MA -- but preferably a PhD -- in Computer Science or Neuroscience
+- Knows statistics / machine learning, how to work with large datasets, and data visualization; NLP wouldn't hurt
+
+Other observations:
+
+- Statistics and machine learning are more important at more senior levels (especially machine learning)
+- Python and R are more important at more senior levels
+- Bigger Python-R gap in Toronto than in US cities
+
+### Data analyst jobs
+
+From these job ads, the profile of a data analyst looks like someone who:
+
+- Knows Excel, SQL; preferably knows Tableau and R or Python
+- Preferably knows statistics / machine learning, visualization, and how to work with large datasets
+- Has a BA -- but preferably an MA -- in Computer Science, Economics, or Social Science
+
+Other observations:
+
+- Lss technical than data scientist jobs across the board
+- Require fewer programming language tools and more of the "easier" tools like Excel
+- Less focused on statistics and more focused on data visualization than data scientist jobs
+- Entry level looks great for people coming from the Social Sciences
+- PhD isn't needed
+
+## How this is organized
+
+I assume most readers won't be interested in the finer details, but more interested in the analyses and results, so I've organized the sections below into tabbed sections with some of the more "in the weeds" methods sections collapsed by default.

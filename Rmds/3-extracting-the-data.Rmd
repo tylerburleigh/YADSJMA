@@ -1,0 +1,106 @@
+
+
+# Extracting the data {.tabset}
+
+OK I now have about 11500 files scraped. Let's extract and clean the data! First I'll extract what I'm calling the job metadata. Things like location, job title, company. It's not the contents of the job ads, but it helps to describe or contextualize the job ads. Then I'll extract the contents of the job ads themselves -- the job description, type of position (FT / PT), and industry.
+
+##  <span>➡</span>
+
+## Job ad metadata
+
+There's a lot of redundancy in the scraped files, because each file contains HTML about all of the other ads in the search results. A consequence of this is that I only need to look at a single file in each directory to extract the basic metadata.
+
+```{r, eval = FALSE}
+# Generate a list of files for metadata extraction
+# we only need 1 file per job search results page
+# so we will take the first one for each location folder
+files_for_metadata <- c()
+for(i in 1:length(locations)){
+  for(k in 1:length(experience_levels)){
+    for (j in 1:length(job_titles)){
+      
+      job_title_no_space <- gsub("\\s", "", job_titles[j])
+      
+      file <- list.files(paste0('data/',
+                                job_title_no_space, '/',
+                                experience_levels[k], '/',
+                                locations[[i]][2]),
+                         full.names = T)[[1]]
+      
+      files_for_metadata <- c(files_for_metadata, file)
+    }
+  }
+}
+
+metadata <- data.frame()
+for(i in 1:length(files_for_metadata)){
+  m <- LinkedInJobsScrapeR::get_job_ad_metadata(files_for_metadata[i])
+  m %<>% mutate(location_abbr = str_split(files_for_metadata[i], "/")[[1]][4],
+                position = str_split(files_for_metadata[i], "/")[[1]][2])
+  metadata <- rbind(metadata, m)
+}
+```
+
+## Contents of job ads
+
+Now I'll extract the contents of the job ads: the job description and other criteria listed with the job ad, such as employment type and industry. This time I'll need to look at every individual file. There's a lot to read/write, so this operation takes a while.
+
+```{r, eval = FALSE}
+job_ads <- list.files("data", recursive = T, full.names = T)
+descriptions <- data.frame()
+criteria <- data.frame()
+for(i in 1:length(job_ads)){
+  details <- get_job_description(job_ads[i])
+  descriptions <- rbind(descriptions, details$description)
+  criteria <- rbind(criteria, details$criteria)
+}
+```
+
+I've already gone ahead and cached the results, so I'll save some time and load them from the CSVs. :)
+
+```{r}
+zip_file <- paste0(here::here(), "/linkedin_jobs_data.zip")
+
+metadata <- data.table::fread(unzip(zip_file, "metadata.csv"))
+descriptions <- data.table::fread(unzip(zip_file, "descriptions.csv"))
+criteria <- data.table::fread(unzip(zip_file, "criteria.csv"))
+
+file.remove("metadata.csv", "descriptions.csv", "criteria.csv")
+```
+
+## Data wrangling
+
+Next it looks like some jobs were cross-posted from one geo-location to another, so I'll deduplicate the dataframes. I can dedupe using the `job_id` variable (LinkedIn's own job identification tokens). I'll also do some other data wrangling here.
+
+One of the choices that I'm making here is to exclude Data Engineer positions. I do this by excluding jobs where "Engineer" is in the job title, unless "Scientist" is also in the job title.
+
+```{r, echo = FALSE}
+metadata %>%
+  filter(job_id %in% descriptions$job_id,
+         !grepl("Engineer", title, ignore.case = T) | 
+          grepl("Engineer", title, ignore.case = T) & grepl("Scientist", title, ignore.case = T)) %>%
+  distinct(job_id, location, .keep_all = T) -> metadata
+
+criteria %>%
+  filter(job_id %in% metadata$job_id) %>%
+  distinct(job_id, name, content, .keep_all = T) -> criteria
+
+# We'll create a new dataframe representing the job seniority levels
+#   and then join it to the descriptions dataframe
+criteria %>%
+  mutate(job_id = as.character(job_id)) %>%
+  filter(name == "Seniority level") %>%
+  select(level = content, job_id) -> levels
+
+# We'll create a list of the job positions and locations for filtering later
+metadata %>%
+  mutate(job_id = as.character(job_id)) %>%
+  select(job_id, location_abbr, position) -> select_metadata
+
+descriptions %>%
+  filter(job_id %in% metadata$job_id) %>%
+  distinct(job_id, .keep_all = T) %>%
+  left_join(levels) %>%
+  left_join(select_metadata) -> descriptions
+```
+

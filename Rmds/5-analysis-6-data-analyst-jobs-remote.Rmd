@@ -1,0 +1,68 @@
+
+### All locations {.tabset}
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+da_filter <- "dataanalyst"
+n_ads <- nrow(descriptions %>% filter(position == da_filter, remote))
+```
+
+`r n_ads` data analyst job ads were included in this analysis.
+
+#### Tools / languages
+
+```{r da-remote-programming, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == da_filter, remote) %>%
+  summarize_tools() %>%
+  generate_barplot(., "Data Analyst", 'Tools and languages', n_ads, 1)
+
+```
+
+Code for the above graph:
+
+```{r da-remote-programming, eval=FALSE}
+```
+
+#### Other skills
+
+```{r da-remote-other, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == da_filter, remote) %>%
+  summarize_other_skills() %>%
+  generate_barplot(., "Data Analyst", 'Other skills', n_ads, 1)
+
+```
+
+Code for the graph above:
+
+```{r da-remote-other, eval=FALSE}
+```
+
+#### Degrees
+
+```{r da-remote-degrees, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == da_filter, remote) %>%
+  summarize_degrees() %>%
+  generate_barplot(., "Data Analyst", 'Degrees', n_ads, 1)
+
+```
+
+Code for the graph above:
+
+```{r da-remote-degrees, eval=FALSE}
+```
+
+#### Disciplines
+
+```{r da-remote-disciplines, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == da_filter, remote) %>%
+  summarize_disciplines() %>%
+  generate_barplot(., "Data Analyst", 'Disciplines', n_ads, 1)
+```
+
+Code for the graph above:
+
+```{r da-remote-disciplines, eval=FALSE}
+```

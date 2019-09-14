@@ -1,0 +1,68 @@
+
+### All locations {.tabset}
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+ds_filter <- "datascientist"
+n_ads <- nrow(descriptions %>% filter(position == ds_filter))
+```
+
+`r n_ads` data scientist job ads were included in this analysis.
+
+#### Tools / languages
+
+```{r ds-programming, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter) %>%
+  summarize_tools() %>%
+  generate_barplot(., "Data Scientist", 'Tools and languages', n_ads, 1)
+
+```
+
+Code for the above graph:
+
+```{r ds-programming, eval=FALSE}
+```
+
+#### Other skills
+
+```{r ds-other, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter) %>%
+  summarize_other_skills() %>%
+  generate_barplot(., "Data Scientist", 'Other skills', n_ads, 1)
+
+```
+
+Code for the graph above:
+
+```{r ds-other, eval=FALSE}
+```
+
+#### Degrees
+
+```{r ds-degrees, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter) %>%
+  summarize_degrees() %>%
+  generate_barplot(., "Data Scientist", 'Degrees', n_ads, 1)
+
+```
+
+Code for the graph above:
+
+```{r ds-degrees, eval=FALSE}
+```
+
+#### Disciplines
+
+```{r ds-disciplines, echo=FALSE, warning=FALSE, message=FALSE}
+descriptions %>%
+  filter(position == ds_filter) %>%
+  summarize_disciplines() %>%
+  generate_barplot(., "Data Scientist", 'Disciplines', n_ads, 1)
+```
+
+Code for the graph above:
+
+```{r ds-disciplines, eval=FALSE}
+```
