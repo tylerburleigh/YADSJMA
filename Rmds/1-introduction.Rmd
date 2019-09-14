@@ -45,7 +45,7 @@ From these job ads, the profile of a data analyst looks like someone who:
 
 Other observations:
 
-- Lss technical than data scientist jobs across the board
+- Less technical than data scientist jobs across the board
 - Require fewer programming language tools and more of the "easier" tools like Excel
 - Less focused on statistics and more focused on data visualization than data scientist jobs
 - Entry level looks great for people coming from the Social Sciences
@@ -53,4 +53,4 @@ Other observations:
 
 ## How this is organized
 
-I assume most readers won't be interested in the finer details, but more interested in the analyses and results, so I've organized the sections below into tabbed sections with some of the more "in the weeds" methods sections collapsed by default.
+Most readers won't be interested in the finer details, but moreso the analyses and results, so I've organized the sections below into tabbed sections with some of the more "in the weeds" methods sections collapsed by default.
