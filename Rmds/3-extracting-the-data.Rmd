@@ -68,7 +68,7 @@ criteria <- data.table::fread(unzip(zip_file, "criteria.csv"))
 file.remove("metadata.csv", "descriptions.csv", "criteria.csv")
 ```
 
-## Data wrangling
+## Join, rename, reorganize
 
 Next it looks like some jobs were cross-posted from one geo-location to another, so I'll deduplicate the dataframes. I can dedupe using the `job_id` variable (LinkedIn's own job identification tokens). I'll also do some other data wrangling here.
 
