@@ -74,7 +74,7 @@ Next it looks like some jobs were cross-posted from one geo-location to another,
 
 One of the choices that I'm making here is to exclude Data Engineer positions. I do this by excluding jobs where "Engineer" is in the job title, unless "Scientist" is also in the job title.
 
-```{r, echo = FALSE}
+```{r}
 metadata %>%
   filter(job_id %in% descriptions$job_id,
          !grepl("Engineer", title, ignore.case = T) | 

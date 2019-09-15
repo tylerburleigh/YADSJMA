@@ -1780,6 +1780,33 @@ file.remove(&quot;metadata.csv&quot;, &quot;descriptions.csv&quot;, &quot;criter
 <h2>Data wrangling</h2>
 <p>Next it looks like some jobs were cross-posted from one geo-location to another, so I’ll deduplicate the dataframes. I can dedupe using the <code>job_id</code> variable (LinkedIn’s own job identification tokens). I’ll also do some other data wrangling here.</p>
 <p>One of the choices that I’m making here is to exclude Data Engineer positions. I do this by excluding jobs where “Engineer” is in the job title, unless “Scientist” is also in the job title.</p>
+<pre class="r"><code>metadata %&gt;%
+  filter(job_id %in% descriptions$job_id,
+         !grepl(&quot;Engineer&quot;, title, ignore.case = T) | 
+          grepl(&quot;Engineer&quot;, title, ignore.case = T) &amp; grepl(&quot;Scientist&quot;, title, ignore.case = T)) %&gt;%
+  distinct(job_id, location, .keep_all = T) -&gt; metadata
+
+criteria %&gt;%
+  filter(job_id %in% metadata$job_id) %&gt;%
+  distinct(job_id, name, content, .keep_all = T) -&gt; criteria
+
+# We&#39;ll create a new dataframe representing the job seniority levels
+#   and then join it to the descriptions dataframe
+criteria %&gt;%
+  mutate(job_id = as.character(job_id)) %&gt;%
+  filter(name == &quot;Seniority level&quot;) %&gt;%
+  select(level = content, job_id) -&gt; levels
+
+# We&#39;ll create a list of the job positions and locations for filtering later
+metadata %&gt;%
+  mutate(job_id = as.character(job_id)) %&gt;%
+  select(job_id, location_abbr, position) -&gt; select_metadata
+
+descriptions %&gt;%
+  filter(job_id %in% metadata$job_id) %&gt;%
+  distinct(job_id, .keep_all = T) %&gt;%
+  left_join(levels) %&gt;%
+  left_join(select_metadata) -&gt; descriptions</code></pre>
 <pre><code>## Joining, by = &quot;job_id&quot;
 ## Joining, by = &quot;job_id&quot;</code></pre>
 </div>
