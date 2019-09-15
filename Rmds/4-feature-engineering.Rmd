@@ -25,6 +25,7 @@ phd_regex <- "(?<![:alnum:])PHD|PhD|Ph.D.|Doctorate|Doctor(?![:alnum:])"
 ba_regex <- "(?<![:alnum:])BS|B.S.|B.A.|Bachelors|Bachelor's|BA(?![:alnum:])"
 ss_regex <- "Psychology|Social Science|Political Science|Behavioral Science|Behavior Science|Behavioural Science"
 ts_regex <- 'temporal|time series|timeseries|longitudinal'
+spatial_regex <- 'Spatial|spatial|GIS|GRASS|IDRISI|FME'
 
 descriptions %>%
   mutate(
@@ -53,6 +54,7 @@ descriptions %>%
          viz = str_detect(description, regex('visuali|viz', ignore_case = T)),
          unstruct_data = str_detect(description, regex(' unstructured data', ignore_case = T)),
          big_data = str_detect(description, regex('large data|big data', ignore_case = T)),
+         spatial = str_detect(description, regex(spatial_regex, ignore_case = F)),
          
          # Degrees
          ba = str_detect(description, regex(ba_regex, ignore_case = T)),
@@ -162,7 +164,8 @@ summarize_other_skills <- function(data) {
               `Time Series` = round(sum(ts)/total*100),
               Visualization = round(sum(viz)/total*100),
               `Big Datasets` = round(sum(big_data)/total*100),
-              `Unstructured Data` = round(sum(unstruct_data)/total*100)
+              `Unstructured Data` = round(sum(unstruct_data)/total*100),
+              `GIS/Spatial` = round(sum(spatial)/total*100)
               )
 }
 ```

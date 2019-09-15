@@ -31,7 +31,7 @@ The profile of a data scientist looks like someone who:
 
 Other observations:
 
-- Statistics and machine learning are more important at more senior levels (especially machine learning)
+- Statistics and machine learning are more important at more senior levels
 - Python and R are more important at more senior levels
 - Bigger Python-R gap in Toronto than in US cities
 
