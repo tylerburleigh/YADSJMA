@@ -2,23 +2,23 @@
 
 This is what I see when I look at the data, approaching it from a career development / job opportunity frame.
 
-## Data scientist jobs
+### Data scientist jobs
 
-The profile of a data scientist looks like someone who:
+A data scientist looks like someone who:
 
-- Knows Python or R (but R less so in Toronto), SQL, and Excel; preferably one of the Big Data frameworks like Hive or Spark
+- Knows SQL and Python or R; preferably one of the Big Data frameworks like Hive or Spark
 - Has a BA or MA -- but preferably a PhD -- in Computer Science or Neuroscience
 - Knows statistics / machine learning, how to work with large datasets, and data visualization; NLP wouldn't hurt
 
 Other observations:
 
-- Statistics and machine learning are more important at more senior levels (especially machine learning)
+- Statistics and machine learning are more important at more senior levels
 - Python and R are more important at more senior levels
 - Bigger Python-R gap in Toronto than in US cities
 
-## Data analyst jobs
+### Data analyst jobs
 
-From these job ads, the profile of a data analyst looks like someone who:
+A data analyst looks like someone who:
 
 - Knows Excel, SQL; preferably knows Tableau and R or Python
 - Preferably knows statistics / machine learning, visualization, and how to work with large datasets
@@ -26,7 +26,7 @@ From these job ads, the profile of a data analyst looks like someone who:
 
 Other observations:
 
-- Lss technical than data scientist jobs across the board
+- Less technical than data scientist jobs across the board
 - Require fewer programming language tools and more of the "easier" tools like Excel
 - Less focused on statistics and more focused on data visualization than data scientist jobs
 - Entry level looks great for people coming from the Social Sciences
