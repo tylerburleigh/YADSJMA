@@ -74,6 +74,11 @@ library(scales)
 
 ```
 
+# Key results
+
+```{r child = here::here("Rmds", "6-key-results.Rmd")}
+
+```
 
 
 

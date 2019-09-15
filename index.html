@@ -1653,42 +1653,6 @@ summary {
 <h2>Methods</h2>
 <p>The data was from a scrape of LinkedIn job ads in September 2019. I scraped job ads for “data scientist” and “data analyst” positions at the levels of Entry, Associate, and Mid-senior in New York City, San Francisco, Boston, Seattle, and Toronto. For each city I targeted the “greater metro area” – in NYC, for example, this included some cities in NJ just on the other side of the Hudson river. I analyzed the “data scientist” and “data analyst” positions separately.</p>
 </div>
-<div id="key-results" class="section level2">
-<h2>Key results</h2>
-<p>This is what I found:</p>
-<div id="data-scientist-jobs" class="section level3">
-<h3>Data scientist jobs</h3>
-<p>The profile of a data scientist looks like someone who:</p>
-<ul>
-<li>Knows SQL and Python or R; preferably one of the Big Data frameworks like Hive or Spark</li>
-<li>Has a BA or MA – but preferably a PhD – in Computer Science or Neuroscience</li>
-<li>Knows statistics / machine learning, how to work with large datasets, and data visualization; NLP wouldn’t hurt</li>
-</ul>
-<p>Other observations:</p>
-<ul>
-<li>Statistics and machine learning are more important at more senior levels</li>
-<li>Python and R are more important at more senior levels</li>
-<li>Bigger Python-R gap in Toronto than in US cities</li>
-</ul>
-</div>
-<div id="data-analyst-jobs" class="section level3">
-<h3>Data analyst jobs</h3>
-<p>From these job ads, the profile of a data analyst looks like someone who:</p>
-<ul>
-<li>Knows Excel, SQL; preferably knows Tableau and R or Python</li>
-<li>Preferably knows statistics / machine learning, visualization, and how to work with large datasets</li>
-<li>Has a BA – but preferably an MA – in Computer Science, Economics, or Social Science</li>
-</ul>
-<p>Other observations:</p>
-<ul>
-<li>Less technical than data scientist jobs across the board</li>
-<li>Require fewer programming language tools and more of the “easier” tools like Excel</li>
-<li>Less focused on statistics and more focused on data visualization than data scientist jobs</li>
-<li>Entry level looks great for people coming from the Social Sciences</li>
-<li>PhD isn’t needed</li>
-</ul>
-</div>
-</div>
 <div id="how-this-is-organized" class="section level2">
 <h2>How this is organized</h2>
 <p>Most readers won’t be interested in the finer details, but moreso the analyses and results, so I’ve organized the sections below into tabbed sections with some of the more “in the weeds” methods sections collapsed by default.</p>
@@ -2006,7 +1970,7 @@ generate_barplot &lt;- function(tbl, position, content, n, location_set) {
 </div>
 </div>
 </div>
-<div id="data-scientist-jobs-1" class="section level1 tabset tabset-pills">
+<div id="data-scientist-jobs" class="section level1 tabset tabset-pills">
 <h1>Data Scientist Jobs</h1>
 <div id="all-locations" class="section level2">
 <h2>All locations</h2>
@@ -2138,7 +2102,7 @@ generate_barplot &lt;- function(tbl, position, content, n, location_set) {
 </div>
 </div>
 </div>
-<div id="data-analyst-jobs-1" class="section level1 tabset tabset-pills">
+<div id="data-analyst-jobs" class="section level1 tabset tabset-pills">
 <h1>Data Analyst jobs</h1>
 <div id="all-locations-2" class="section level2">
 <h2>All locations</h2>
@@ -2268,6 +2232,42 @@ generate_barplot &lt;- function(tbl, position, content, n, location_set) {
   generate_barplot(., &quot;Data Analyst&quot;, &#39;Disciplines&#39;, n_ads, 1)</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div id="key-results" class="section level1">
+<h1>Key results</h1>
+<p>This is what I see when I look at the data, approaching it from a career development / job opportunity frame.</p>
+<div id="data-scientist-jobs-1" class="section level2">
+<h2>Data scientist jobs</h2>
+<p>The profile of a data scientist looks like someone who:</p>
+<ul>
+<li>Knows Python or R (but R less so in Toronto), SQL, and Excel; preferably one of the Big Data frameworks like Hive or Spark</li>
+<li>Has a BA or MA – but preferably a PhD – in Computer Science or Neuroscience</li>
+<li>Knows statistics / machine learning, how to work with large datasets, and data visualization; NLP wouldn’t hurt</li>
+</ul>
+<p>Other observations:</p>
+<ul>
+<li>Statistics and machine learning are more important at more senior levels (especially machine learning)</li>
+<li>Python and R are more important at more senior levels</li>
+<li>Bigger Python-R gap in Toronto than in US cities</li>
+</ul>
+</div>
+<div id="data-analyst-jobs-1" class="section level2">
+<h2>Data analyst jobs</h2>
+<p>From these job ads, the profile of a data analyst looks like someone who:</p>
+<ul>
+<li>Knows Excel, SQL; preferably knows Tableau and R or Python</li>
+<li>Preferably knows statistics / machine learning, visualization, and how to work with large datasets</li>
+<li>Has a BA – but preferably an MA – in Computer Science, Economics, or Social Science</li>
+</ul>
+<p>Other observations:</p>
+<ul>
+<li>Lss technical than data scientist jobs across the board</li>
+<li>Require fewer programming language tools and more of the “easier” tools like Excel</li>
+<li>Less focused on statistics and more focused on data visualization than data scientist jobs</li>
+<li>Entry level looks great for people coming from the Social Sciences</li>
+<li>PhD isn’t needed</li>
+</ul>
 </div>
 </div>
 
